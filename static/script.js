@@ -1,7 +1,8 @@
 let currentUser = null;
 let userType = null;
 let allComplaints = [];
-const API_BASE = "http://127.0.0.1:5000";
+const API_BASE = "https://campus-complaint-management-system.onrender.com";
+
 
 window.addEventListener('DOMContentLoaded', () => {
     setupDarkMode();
