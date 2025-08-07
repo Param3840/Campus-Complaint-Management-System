@@ -9,16 +9,13 @@ from functools import wraps
 app = Flask(__name__)
 CORS(app)
 
-app.config['SECRET_KEY'] = 'your_secret_key_here'  # Change this in real app
+app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 DATA_FILE = 'complaints.json'
+STUDENT_FILE = 'students.json'  # for registration
 
+# Load static users (admins)
 users = {
-    'students': {
-        'ST001': {'password': 'student123', 'name': 'Paramveer Kumar Singh'},
-        'ST002': {'password': 'student123', 'name': 'Ankit Singh'},
-        'ST003': {'password': 'student123', 'name': 'Rishi Raj Verma'}
-    },
     'admins': {
         'admin': {'password': 'admin123', 'name': 'Yash Choubey'}
     }
@@ -28,7 +25,8 @@ users = {
 def index():
     return render_template('index.html')
 
-# Utility functions
+# Utilities for complaints
+
 def load_data():
     if not os.path.exists(DATA_FILE):
         return []
@@ -39,7 +37,20 @@ def save_data(data):
     with open(DATA_FILE, 'w') as f:
         json.dump(data, f, indent=2)
 
-# Token Required Decorator
+# Utilities for students
+
+def load_students():
+    if not os.path.exists(STUDENT_FILE):
+        return []
+    with open(STUDENT_FILE, 'r') as f:
+        return json.load(f)
+
+def save_students(students):
+    with open(STUDENT_FILE, 'w') as f:
+        json.dump(students, f, indent=2)
+
+# Auth Decorator
+
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):
@@ -54,7 +65,7 @@ def token_required(f):
 
         try:
             data = jwt.decode(token, app.config['SECRET_KEY'], algorithms=["HS256"])
-            request.user = data  # attach decoded user info
+            request.user = data
         except jwt.ExpiredSignatureError:
             return jsonify({'status': 'error', 'message': 'Token expired'}), 401
         except jwt.InvalidTokenError:
@@ -63,7 +74,7 @@ def token_required(f):
         return f(*args, **kwargs)
     return decorated
 
-# Login route
+# 🔐 Login
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
@@ -72,11 +83,12 @@ def login():
     password = data.get('password')
 
     if role == 'student':
-        user = users['students'].get(user_id)
-        if user and user['password'] == password:
+        students = load_students()
+        student = next((s for s in students if s['id'] == user_id and s['password'] == password), None)
+        if student:
             token = jwt.encode({
-                'id': user_id,
-                'name': user['name'],
+                'id': student['id'],
+                'name': student['name'],
                 'role': 'student',
                 'exp': datetime.utcnow() + timedelta(hours=2)
             }, app.config['SECRET_KEY'], algorithm="HS256")
@@ -94,13 +106,32 @@ def login():
 
     return jsonify({'status': 'error', 'message': 'Invalid credentials'}), 401
 
-# Get complaints
-@app.route('/get_complaints', methods=['GET'])
-@token_required
-def get_complaints():
-    return jsonify(load_data())
+# 🆕 Register student
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.get_json()
+    name = data.get('name')
+    student_id = data.get('id')
+    password = data.get('password')
 
-# Submit complaint
+    if not all([name, student_id, password]):
+        return jsonify({'status': 'fail', 'message': 'Missing fields'}), 400
+
+    students = load_students()
+    if any(s['id'] == student_id for s in students):
+        return jsonify({'status': 'fail', 'message': 'Student ID already registered'}), 400
+
+    students.append({
+        'name': name,
+        'id': student_id,
+
+        'password': password
+    })
+
+    save_students(students)
+    return jsonify({'status': 'success', 'message': 'Student registered successfully!'})
+
+# 📥 Submit Complaint
 @app.route('/submit_complaint', methods=['POST'])
 @token_required
 def submit_complaint():
@@ -125,7 +156,13 @@ def submit_complaint():
     save_data(complaints)
     return jsonify({'status': 'success'})
 
-# Resolve complaint
+# 📄 Get Complaints
+@app.route('/get_complaints', methods=['GET'])
+@token_required
+def get_complaints():
+    return jsonify(load_data())
+
+# ✅ Resolve Complaint
 @app.route('/resolve_complaint', methods=['POST'])
 @token_required
 def resolve_complaint():
@@ -139,8 +176,7 @@ def resolve_complaint():
     save_data(complaints)
     return jsonify({'status': 'success'})
 
-import os
-
+# Run app
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
     app.run(host='0.0.0.0', port=port)

@@ -42,6 +42,48 @@
     <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-3 rounded-full glass-effect text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300">
         <span id="darkModeIcon">🌙</span>
     </button>
+    <div id="registerPage" class="hidden min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-md w-full">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-white mb-2">🎓 Student Portal</h1>
+        <p class="text-white text-opacity-90">Create Your Account</p>
+      </div>
+      <div class="glass-effect rounded-xl shadow-2xl p-8 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-bold text-white mb-2">👨‍🎓 Student Registration</h2>
+          <p class="text-white text-opacity-80">Create your student account</p>
+        </div>
+        <form id="studentRegisterForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">Full Name</label>
+            <input type="text" id="regStudentName" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white" placeholder="Enter your full name" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">Student ID</label>
+            <input type="text" id="regStudentId" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white" placeholder="Enter your student ID" required>
+          </div>
+         
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">Password</label>
+            <input type="password" id="regStudentPassword" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white" placeholder="Create a password" required>
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-white mb-2">Confirm Password</label>
+            <input type="password" id="regStudentConfirmPassword" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white" placeholder="Confirm your password" required>
+          </div>
+          <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105">
+            Register as Student
+          </button>
+        </form>
+        <div class="mt-6 text-center">
+          <p class="text-white text-opacity-90 text-sm">Already have an account?</p>
+          <button id="goToLoginBtn" class="text-white font-semibold hover:text-purple-300 transition-colors">
+            Login Here
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 
     <!-- Login Page -->
     <div id="loginPage" class="min-h-screen flex items-center justify-center px-4">
@@ -64,6 +106,10 @@
                         👨‍💼 Admin Login
                     </button>
                 </div>
+<div class="text-center text-white mt-4">
+    <p class="text-sm">New user?</p>
+    <button id="goToRegisterBtn" class="font-semibold hover:text-purple-300 transition">Register Here</button>
+</div>
 
                 <!-- Student Login Form -->
                 <form id="studentLoginForm" class="space-y-4">

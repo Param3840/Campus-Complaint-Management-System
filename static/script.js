@@ -3,13 +3,14 @@ let userType = null;
 let allComplaints = [];
 const API_BASE = "https://campus-complaint-management-system.onrender.com";
 
-
 window.addEventListener('DOMContentLoaded', () => {
     setupDarkMode();
     setupLoginForms();
     setupFilters();
     setupLogout();
     setupComplaintSubmit();
+    setupViewToggles();
+    setupRegistration();
     tryAutoLogin();
 });
 
@@ -33,6 +34,21 @@ function tryAutoLogin() {
     showMainApp();
 }
 
+function setupViewToggles() {
+    const loginPage = document.getElementById('loginPage');
+    const registerPage = document.getElementById('registerPage');
+
+    document.getElementById('goToRegisterBtn')?.addEventListener('click', () => {
+        loginPage.classList.add('hidden');
+        registerPage.classList.remove('hidden');
+    });
+
+    document.getElementById('goToLoginBtn')?.addEventListener('click', () => {
+        registerPage.classList.add('hidden');
+        loginPage.classList.remove('hidden');
+    });
+}
+
 function setupLoginForms() {
     document.getElementById('studentLoginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -50,7 +66,7 @@ function setupLoginForms() {
             localStorage.setItem('token', data.token);
             tryAutoLogin();
         } else {
-            alert("Invalid student login");
+            alert(data.message || "Invalid student login");
         }
     });
 
@@ -70,7 +86,7 @@ function setupLoginForms() {
             localStorage.setItem('token', data.token);
             tryAutoLogin();
         } else {
-            alert("Invalid admin login");
+            alert(data.message || "Invalid admin login");
         }
     });
 
@@ -85,8 +101,40 @@ function setupLoginForms() {
     });
 }
 
+function setupRegistration() {
+    document.getElementById('studentRegisterForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('regStudentName').value.trim();
+        const id = document.getElementById('regStudentId').value.trim();
+        const password = document.getElementById('regStudentPassword').value;
+        const confirmPassword = document.getElementById('regStudentConfirmPassword').value;
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        const res = await fetch(`${API_BASE}/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, id, password })
+        });
+
+        const data = await res.json();
+        if (data.status === 'success') {
+            alert("Registered successfully! You can now login.");
+            document.getElementById('goToLoginBtn').click();
+            document.getElementById('studentRegisterForm').reset();
+        } else {
+            alert(data.message || "Registration failed.");
+        }
+    });
+}
+
 function showMainApp() {
     document.getElementById('loginPage').classList.add('hidden');
+    document.getElementById('registerPage').classList.add('hidden');
     document.getElementById('mainApp').classList.remove('hidden');
 
     const welcome = document.getElementById('welcomeMessage');
@@ -172,19 +220,18 @@ function renderStudentComplaints() {
 
     container.innerHTML = my.map(c => `
         <div class="border rounded p-3 dark:bg-gray-800">
-  <div class="flex justify-between">
-    <span class="text-sm font-medium text-gray-800 dark:text-white">#${c.id}</span>
-    <span class="text-xs ${c.status === 'resolved' ? 'text-green-600' : 'text-yellow-600'}">
-      ${c.status}
-    </span>
-  </div>
-  <div class="font-semibold text-gray-800 dark:text-white">${c.category}</div>
-  <p class="text-sm text-gray-700 dark:text-white">${c.description}</p>
-  <div class="text-xs text-gray-500 dark:text-gray-300">
-    Submitted: ${c.submittedAt}${c.resolvedAt ? ` | Resolved: ${c.resolvedAt}` : ''}
-  </div>
-</div>
-
+            <div class="flex justify-between">
+                <span class="text-sm font-medium text-gray-800 dark:text-white">#${c.id}</span>
+                <span class="text-xs ${c.status === 'resolved' ? 'text-green-600' : 'text-yellow-600'}">
+                    ${c.status}
+                </span>
+            </div>
+            <div class="font-semibold text-gray-800 dark:text-white">${c.category}</div>
+            <p class="text-sm text-gray-700 dark:text-white">${c.description}</p>
+            <div class="text-xs text-gray-500 dark:text-gray-300">
+                Submitted: ${c.submittedAt}${c.resolvedAt ? ` | Resolved: ${c.resolvedAt}` : ''}
+            </div>
+        </div>
     `).join('');
 }
 
@@ -206,7 +253,7 @@ function renderAdminComplaints() {
         <div class="border rounded p-3 dark:bg-gray-800">
             <div class="flex justify-between">
                 <div>
-                    <strong class="text-gray-800 dark:text-white">${c.studentName}</strong> 
+                    <strong class="text-gray-800 dark:text-white">${c.studentName}</strong>
                     <span class="text-gray-600 dark:text-gray-300">(${c.studentId})</span><br>
                     <span class="text-sm text-gray-700 dark:text-white">
                         ${c.category} - ${c.description}
@@ -225,7 +272,6 @@ function renderAdminComplaints() {
         </div>
     `).join('');
 }
-
 
 async function resolveComplaint(id) {
     const res = await fetch(`${API_BASE}/resolve_complaint`, {
