@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Complaint Management - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen transition-all duration-300 dark:bg-gray-900">
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-3 rounded-full glass-effect text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300">
+        <span id="darkModeIcon">🌙</span>
+    </button>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-md w-full">
+            <!-- Header -->
+            <div class="flex justify-center">
+                <h1 class="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white whitespace-nowrap">
+                    Complaint Management System
+                </h1>
+            </div>
+<br>
+
+            <!-- Login Type Selection -->
+            <div class="glass-effect rounded-xl shadow-2xl p-8 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                <div class="flex mb-6">
+                    <button id="studentLoginBtn" class="flex-1 py-3 px-4 text-center font-semibold rounded-l-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white transition-all hover:from-purple-600 hover:to-pink-600">
+                        👨‍🎓 Student Login
+                    </button>
+                    <button id="adminLoginBtn" class="flex-1 py-3 px-4 text-center font-semibold rounded-r-lg bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all dark:bg-gray-700 dark:hover:bg-gray-600">
+                        👨‍💼 Admin Login
+                    </button>
+                </div>
+
+                <!-- Student Login Form -->
+                <form id="studentLoginForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Student ID</label>
+                        <input type="text" id="studentLoginId" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter your student ID" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Password</label>
+                        <input type="password" id="studentPassword" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105">
+                        Login as Student
+                    </button>
+                    <div class="text-sm text-white mt-4 p-3 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
+                        <strong>Demo Credentials:</strong><br>
+                        Student ID: ST001<br>
+                        Password: student123
+                    </div>
+                </form>
+
+                <!-- Admin Login Form -->
+                <form id="adminLoginForm" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Admin Username</label>
+                        <input type="text" id="adminUsername" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter admin username" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Password</label>
+                        <input type="password" id="adminPassword" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105">
+                        Login as Admin
+                    </button>
+                    <div class="text-sm text-white mt-4 p-3 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
+                        <strong>Demo Credentials:</strong><br>
+                        Username: admin<br>
+                        Password: admin123
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="hidden">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Header with Logout -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg dark:text-gray-100">Dashboard</h1>
+                    <p id="welcomeMessage" class="text-white text-opacity-90 dark:text-gray-300"></p>
+                </div>
+                <button id="logoutBtn" class="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg mr-4">
+    🚪 Logout
+</button>
+
+            </div>
+
+            <!-- Student Portal -->
+            <div id="studentPortal" class="hidden">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Submit Complaint -->
+                    <div class="glass-effect rounded-xl shadow-2xl p-6 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center dark:text-gray-100">
+                            📝 Submit New Complaint
+                        </h2>
+                        <form id="complaintForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Student Name</label>
+                                <input type="text" id="studentName" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter your name" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Student ID</label>
+                                <input type="text" id="studentId" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Category</label>
+                                <select id="category" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+                                    <option value="">Select category</option>
+                                    <option value="Academic">Academic</option>
+                                    <option value="Facilities">Facilities</option>
+                                    <option value="Hostel">Hostel</option>
+                                    <option value="Library">Library</option>
+                                    <option value="Cafeteria">Cafeteria</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Complaint Description</label>
+                                <textarea id="complaintText" rows="4" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Describe your complaint in detail..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
+                                Submit Complaint
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- My Complaints -->
+                    <div class="glass-effect rounded-xl shadow-2xl p-6 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center dark:text-gray-100">
+                            📋 My Complaints
+                        </h2>
+                        <div id="studentComplaints" class="space-y-4">
+                            <div class="text-center text-gray-500 py-8">
+                                <p>No complaints submitted yet</p>
+                                <p class="text-sm">Submit your first complaint using the form</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Portal -->
+            <div id="adminPortal" class="hidden">
+                <div class="glass-effect rounded-xl shadow-2xl p-6 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center dark:text-gray-100">
+                        🛠️ Admin Dashboard - All Complaints
+                    </h2>
+                    
+                    <!-- Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-semibold text-white">Total Complaints</h3>
+                            <p id="totalComplaints" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-500 to-orange-500 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-semibold text-white">Pending</h3>
+                            <p id="pendingComplaints" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-green-500 to-teal-500 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-semibold text-white">Resolved</h3>
+                            <p id="resolvedComplaints" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Options -->
+                    <div class="mb-6 flex flex-wrap gap-4">
+                        <select id="statusFilter" class="px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                        <select id="categoryFilter" class="px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="all">All Categories</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Facilities">Facilities</option>
+                            <option value="Hostel">Hostel</option>
+                            <option value="Library">Library</option>
+                            <option value="Cafeteria">Cafeteria</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div id="adminComplaints" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <p>No complaints to display</p>
+                            <p class="text-sm">Complaints will appear here once students submit them</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

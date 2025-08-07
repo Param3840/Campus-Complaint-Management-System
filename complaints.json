@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "studentName": "Paramveer",
+    "studentId": "ST001",
+    "category": "Facilities",
+    "description": "water issue in my building",
+    "status": "resolved",
+    "submittedAt": "07/08/2025",
+    "resolvedAt": "07/08/2025"
+  }
+]

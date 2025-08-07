@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Complaint Management - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .slide-in {
+            animation: slideIn 0.4s ease-out;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .glass-effect {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .dark .gradient-bg {
+            background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen transition-all duration-300 dark:bg-gray-900">
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeToggle" class="fixed top-4 right-4 z-50 p-3 rounded-full glass-effect text-white hover:bg-white hover:bg-opacity-20 transition-all duration-300">
+        <span id="darkModeIcon">🌙</span>
+    </button>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center px-4">
+        <div class="max-w-md w-full">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg">🎓 Student Portal</h1>
+                <p class="text-white text-opacity-90">Complaint Management System</p>
+            </div>
+
+            <!-- Login Type Selection -->
+            <div class="glass-effect rounded-xl shadow-2xl p-8 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                <div class="flex mb-6">
+                    <button id="studentLoginBtn" class="flex-1 py-3 px-4 text-center font-semibold rounded-l-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white transition-all hover:from-purple-600 hover:to-pink-600">
+                        👨‍🎓 Student Login
+                    </button>
+                    <button id="adminLoginBtn" class="flex-1 py-3 px-4 text-center font-semibold rounded-r-lg bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all dark:bg-gray-700 dark:hover:bg-gray-600">
+                        👨‍💼 Admin Login
+                    </button>
+                </div>
+
+                <!-- Student Login Form -->
+                <form id="studentLoginForm" class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Student ID</label>
+                        <input type="text" id="studentLoginId" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter your student ID" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Password</label>
+                        <input type="password" id="studentPassword" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105">
+                        Login as Student
+                    </button>
+                    <div class="text-sm text-white mt-4 p-3 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
+                        <strong>Demo Credentials:</strong><br>
+                        Student ID: ST001<br>
+                        Password: student123
+                    </div>
+                </form>
+
+                <!-- Admin Login Form -->
+                <form id="adminLoginForm" class="space-y-4 hidden">
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Admin Username</label>
+                        <input type="text" id="adminUsername" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter admin username" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-white mb-2">Password</label>
+                        <input type="password" id="adminPassword" class="w-full px-4 py-3 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-green-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter admin password" required>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-teal-500 hover:from-green-600 hover:to-teal-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105">
+                        Login as Admin
+                    </button>
+                    <div class="text-sm text-white mt-4 p-3 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm">
+                        <strong>Demo Credentials:</strong><br>
+                        Username: admin<br>
+                        Password: admin123
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="hidden">
+        <div class="container mx-auto px-4 py-8">
+            <!-- Header with Logout -->
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <h1 class="text-4xl font-bold text-white mb-2 drop-shadow-lg dark:text-gray-100">Student Complaint Management</h1>
+                    <p id="welcomeMessage" class="text-white text-opacity-90 dark:text-gray-300"></p>
+                </div>
+                <button id="logoutBtn" class="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white px-6 py-3 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
+                    🚪 Logout
+                </button>
+            </div>
+
+            <!-- Student Portal -->
+            <div id="studentPortal" class="hidden">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Submit Complaint -->
+                    <div class="glass-effect rounded-xl shadow-2xl p-6 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center dark:text-gray-100">
+                            📝 Submit New Complaint
+                        </h2>
+                        <form id="complaintForm" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Student Name</label>
+                                <input type="text" id="studentName" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Enter your name" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Student ID</label>
+                                <input type="text" id="studentId" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" readonly>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Category</label>
+                                <select id="category" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white" required>
+                                    <option value="">Select category</option>
+                                    <option value="Academic">Academic</option>
+                                    <option value="Facilities">Facilities</option>
+                                    <option value="Hostel">Hostel</option>
+                                    <option value="Library">Library</option>
+                                    <option value="Cafeteria">Cafeteria</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-white mb-2 dark:text-gray-200">Complaint Description</label>
+                                <textarea id="complaintText" rows="4" class="w-full px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 focus:border-transparent text-white placeholder-white placeholder-opacity-70 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="Describe your complaint in detail..." required></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg">
+                                Submit Complaint
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- My Complaints -->
+                    <div class="glass-effect rounded-xl shadow-2xl p-6 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                        <h2 class="text-2xl font-bold text-white mb-6 flex items-center dark:text-gray-100">
+                            📋 My Complaints
+                        </h2>
+                        <div id="studentComplaints" class="space-y-4">
+                            <div class="text-center text-gray-500 py-8">
+                                <p>No complaints submitted yet</p>
+                                <p class="text-sm">Submit your first complaint using the form</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Portal -->
+            <div id="adminPortal" class="hidden">
+                <div class="glass-effect rounded-xl shadow-2xl p-6 backdrop-blur-lg dark:bg-gray-800 dark:bg-opacity-50">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center dark:text-gray-100">
+                        🛠️ Admin Dashboard - All Complaints
+                    </h2>
+                    
+                    <!-- Statistics -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <div class="bg-gradient-to-r from-blue-500 to-purple-500 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-semibold text-white">Total Complaints</h3>
+                            <p id="totalComplaints" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-yellow-500 to-orange-500 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-semibold text-white">Pending</h3>
+                            <p id="pendingComplaints" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                        <div class="bg-gradient-to-r from-green-500 to-teal-500 p-4 rounded-lg shadow-lg">
+                            <h3 class="text-lg font-semibold text-white">Resolved</h3>
+                            <p id="resolvedComplaints" class="text-2xl font-bold text-white">0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Filter Options -->
+                    <div class="mb-6 flex flex-wrap gap-4">
+                        <select id="statusFilter" class="px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="all">All Status</option>
+                            <option value="pending">Pending</option>
+                            <option value="resolved">Resolved</option>
+                        </select>
+                        <select id="categoryFilter" class="px-4 py-2 bg-white bg-opacity-20 border border-white border-opacity-30 rounded-lg focus:ring-2 focus:ring-purple-400 text-white dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                            <option value="all">All Categories</option>
+                            <option value="Academic">Academic</option>
+                            <option value="Facilities">Facilities</option>
+                            <option value="Hostel">Hostel</option>
+                            <option value="Library">Library</option>
+                            <option value="Cafeteria">Cafeteria</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div id="adminComplaints" class="space-y-4">
+                        <div class="text-center text-gray-500 py-8">
+                            <p>No complaints to display</p>
+                            <p class="text-sm">Complaints will appear here once students submit them</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        let currentUser = null;
+        let userType = null;
+        let complaints = [];
+        let complaintIdCounter = 1;
+
+        // Demo users
+        const users = {
+            students: {
+                'ST001': { password: 'student123', name: 'John Smith' },
+                'ST002': { password: 'student123', name: 'Sarah Johnson' },
+                'ST003': { password: 'student123', name: 'Mike Wilson' }
+            },
+            admins: {
+                'admin': { password: 'admin123', name: 'Administrator' }
+            }
+        };
+
+        // DOM elements
+        const loginPage = document.getElementById('loginPage');
+        const mainApp = document.getElementById('mainApp');
+        const studentLoginBtn = document.getElementById('studentLoginBtn');
+        const adminLoginBtn = document.getElementById('adminLoginBtn');
+        const studentLoginForm = document.getElementById('studentLoginForm');
+        const adminLoginForm = document.getElementById('adminLoginForm');
+        const studentPortal = document.getElementById('studentPortal');
+        const adminPortal = document.getElementById('adminPortal');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        // Dark mode functionality
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const darkModeIcon = document.getElementById('darkModeIcon');
+        
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.documentElement.classList.add('dark');
+            darkModeIcon.textContent = '☀️';
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            darkModeIcon.textContent = isDark ? '☀️' : '🌙';
+            localStorage.setItem('darkMode', isDark);
+        });
+
+        // Login type switching
+        studentLoginBtn.addEventListener('click', () => {
+            studentLoginBtn.className = 'flex-1 py-3 px-4 text-center font-semibold rounded-l-lg bg-gradient-to-r from-purple-500 to-pink-500 text-white transition-all hover:from-purple-600 hover:to-pink-600';
+            adminLoginBtn.className = 'flex-1 py-3 px-4 text-center font-semibold rounded-r-lg bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all dark:bg-gray-700 dark:hover:bg-gray-600';
+            studentLoginForm.classList.remove('hidden');
+            adminLoginForm.classList.add('hidden');
+        });
+
+        adminLoginBtn.addEventListener('click', () => {
+            adminLoginBtn.className = 'flex-1 py-3 px-4 text-center font-semibold rounded-r-lg bg-gradient-to-r from-green-500 to-teal-500 text-white transition-all hover:from-green-600 hover:to-teal-600';
+            studentLoginBtn.className = 'flex-1 py-3 px-4 text-center font-semibold rounded-l-lg bg-white bg-opacity-20 text-white hover:bg-opacity-30 transition-all dark:bg-gray-700 dark:hover:bg-gray-600';
+            adminLoginForm.classList.remove('hidden');
+            studentLoginForm.classList.add('hidden');
+        });
+
+        // Student login
+        studentLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const studentId = document.getElementById('studentLoginId').value;
+            const password = document.getElementById('studentPassword').value;
+
+            if (users.students[studentId] && users.students[studentId].password === password) {
+                currentUser = { id: studentId, name: users.students[studentId].name };
+                userType = 'student';
+                showMainApp();
+            } else {
+                showNotification('Invalid student ID or password!', 'error');
+            }
+        });
+
+        // Admin login
+        adminLoginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = document.getElementById('adminUsername').value;
+            const password = document.getElementById('adminPassword').value;
+
+            if (users.admins[username] && users.admins[username].password === password) {
+                currentUser = { id: username, name: users.admins[username].name };
+                userType = 'admin';
+                showMainApp();
+            } else {
+                showNotification('Invalid admin credentials!', 'error');
+            }
+        });
+
+        // Show main application
+        function showMainApp() {
+            loginPage.classList.add('hidden');
+            mainApp.classList.remove('hidden');
+            mainApp.className = 'slide-in';
+
+            if (userType === 'student') {
+                welcomeMessage.textContent = `Welcome, ${currentUser.name} (${currentUser.id})`;
+                studentPortal.classList.remove('hidden');
+                adminPortal.classList.add('hidden');
+                document.getElementById('studentId').value = currentUser.id;
+                renderStudentComplaints();
+            } else {
+                welcomeMessage.textContent = `Welcome, ${currentUser.name}`;
+                adminPortal.classList.remove('hidden');
+                studentPortal.classList.add('hidden');
+                renderAdminComplaints();
+                updateStatistics();
+            }
+        }
+
+        // Logout
+        logoutBtn.addEventListener('click', () => {
+            currentUser = null;
+            userType = null;
+            loginPage.classList.remove('hidden');
+            mainApp.classList.add('hidden');
+            
+            // Reset forms
+            studentLoginForm.reset();
+            adminLoginForm.reset();
+            document.getElementById('complaintForm').reset();
+        });
+
+        // Submit complaint
+        document.getElementById('complaintForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const complaint = {
+                id: complaintIdCounter++,
+                studentName: document.getElementById('studentName').value,
+                studentId: currentUser.id,
+                category: document.getElementById('category').value,
+                description: document.getElementById('complaintText').value,
+                status: 'pending',
+                submittedAt: new Date().toLocaleDateString(),
+                resolvedAt: null
+            };
+
+            complaints.push(complaint);
+            document.getElementById('complaintForm').reset();
+            document.getElementById('studentId').value = currentUser.id;
+            renderStudentComplaints();
+            
+            showNotification('Complaint submitted successfully!', 'success');
+        });
+
+        // Render student complaints
+        function renderStudentComplaints() {
+            const studentComplaints = document.getElementById('studentComplaints');
+            const userComplaints = complaints.filter(c => c.studentId === currentUser.id);
+
+            if (userComplaints.length === 0) {
+                studentComplaints.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <p>No complaints submitted yet</p>
+                        <p class="text-sm">Submit your first complaint using the form</p>
+                    </div>
+                `;
+                return;
+            }
+
+            studentComplaints.innerHTML = userComplaints.map(complaint => `
+                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-2">
+                        <span class="text-sm font-medium text-gray-600">ID: #${complaint.id}</span>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${
+                            complaint.status === 'resolved' 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-yellow-100 text-yellow-800'
+                        }">
+                            ${complaint.status === 'resolved' ? '✅ Resolved' : '⏳ Pending'}
+                        </span>
+                    </div>
+                    <h4 class="font-semibold text-gray-800 mb-1">${complaint.category}</h4>
+                    <p class="text-gray-600 text-sm mb-2">${complaint.description}</p>
+                    <div class="text-xs text-gray-500">
+                        Submitted: ${complaint.submittedAt}
+                        ${complaint.resolvedAt ? ` | Resolved: ${complaint.resolvedAt}` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render admin complaints
+        function renderAdminComplaints() {
+            const adminComplaints = document.getElementById('adminComplaints');
+            const statusFilter = document.getElementById('statusFilter');
+            const categoryFilter = document.getElementById('categoryFilter');
+            
+            let filteredComplaints = complaints;
+
+            // Apply filters
+            const statusFilterValue = statusFilter.value;
+            const categoryFilterValue = categoryFilter.value;
+
+            if (statusFilterValue !== 'all') {
+                filteredComplaints = filteredComplaints.filter(c => c.status === statusFilterValue);
+            }
+
+            if (categoryFilterValue !== 'all') {
+                filteredComplaints = filteredComplaints.filter(c => c.category === categoryFilterValue);
+            }
+
+            if (filteredComplaints.length === 0) {
+                adminComplaints.innerHTML = `
+                    <div class="text-center text-gray-500 py-8">
+                        <p>No complaints to display</p>
+                        <p class="text-sm">Complaints will appear here once students submit them</p>
+                    </div>
+                `;
+                return;
+            }
+
+            adminComplaints.innerHTML = filteredComplaints.map(complaint => `
+                <div class="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow">
+                    <div class="flex justify-between items-start mb-3">
+                        <div>
+                            <span class="text-sm font-medium text-gray-600">ID: #${complaint.id}</span>
+                            <h4 class="font-semibold text-gray-800">${complaint.studentName} (${complaint.studentId})</h4>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${
+                            complaint.status === 'resolved' 
+                                ? 'bg-green-100 text-green-800' 
+                                : 'bg-yellow-100 text-yellow-800'
+                        }">
+                            ${complaint.status === 'resolved' ? '✅ Resolved' : '⏳ Pending'}
+                        </span>
+                    </div>
+                    <div class="mb-3">
+                        <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
+                            ${complaint.category}
+                        </span>
+                        <p class="text-gray-600 text-sm">${complaint.description}</p>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <div class="text-xs text-gray-500">
+                            Submitted: ${complaint.submittedAt}
+                            ${complaint.resolvedAt ? ` | Resolved: ${complaint.resolvedAt}` : ''}
+                        </div>
+                        ${complaint.status === 'pending' ? `
+                            <button onclick="resolveComplaint(${complaint.id})" 
+                                    class="bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-1 rounded-md transition-colors">
+                                Mark Resolved
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const total = complaints.length;
+            const pending = complaints.filter(c => c.status === 'pending').length;
+            const resolved = complaints.filter(c => c.status === 'resolved').length;
+
+            document.getElementById('totalComplaints').textContent = total;
+            document.getElementById('pendingComplaints').textContent = pending;
+            document.getElementById('resolvedComplaints').textContent = resolved;
+        }
+
+        // Resolve complaint
+        function resolveComplaint(id) {
+            const complaint = complaints.find(c => c.id === id);
+            if (complaint) {
+                complaint.status = 'resolved';
+                complaint.resolvedAt = new Date().toLocaleDateString();
+                renderAdminComplaints();
+                updateStatistics();
+                showNotification('Complaint marked as resolved!', 'success');
+            }
+        }
+
+        // Filter event listeners
+        document.getElementById('statusFilter').addEventListener('change', renderAdminComplaints);
+        document.getElementById('categoryFilter').addEventListener('change', renderAdminComplaints);
+
+        // Notification system
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 px-6 py-3 rounded-lg text-white font-medium z-50 ${
+                type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            }`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Initialize with sample data
+        function initializeSampleData() {
+            complaints = [
+                {
+                    id: 1,
+                    studentName: "John Smith",
+                    studentId: "ST001",
+                    category: "Library",
+                    description: "The library computers are running very slowly and some are not working at all.",
+                    status: "pending",
+                    submittedAt: "12/15/2024",
+                    resolvedAt: null
+                },
+                {
+                    id: 2,
+                    studentName: "Sarah Johnson",
+                    studentId: "ST002",
+                    category: "Cafeteria",
+                    description: "The food quality in the cafeteria has been poor lately, and the prices are too high.",
+                    status: "resolved",
+                    submittedAt: "12/14/2024",
+                    resolvedAt: "12/15/2024"
+                }
+            ];
+            complaintIdCounter = 3;
+        }
+
+        // Initialize the app
+        initializeSampleData();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96b10c35862659a8',t:'MTc1NDUwOTY2My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
